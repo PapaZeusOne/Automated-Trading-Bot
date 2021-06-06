@@ -5,7 +5,7 @@
 
 * Include backtesting. 
 
-# Furter Ideas:
+# Further Ideas:
 * Filter after industrial sectors. 
 
 * Send a push whenever a stock loses strength and notify user. 
