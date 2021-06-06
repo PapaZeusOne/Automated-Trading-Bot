@@ -1,6 +1,6 @@
 # ToDo:
-*Build huge dataset with most common common stocks from DAX, NASDAQ, NIKKEI etc.
+* Build huge dataset with most common common stocks from DAX, NASDAQ, NIKKEI etc.
 
-*Send push notification for the stock with the best stock
+* Send push notification for the stock with the best stock
 
-*Filter after industrial sectors. 
+* Filter after industrial sectors. 
