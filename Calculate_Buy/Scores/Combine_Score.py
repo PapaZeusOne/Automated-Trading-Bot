@@ -1,5 +1,4 @@
 from Packages.imports_buy import *
-
 from Calculate_Score import *
 
 def relative_score(row):
