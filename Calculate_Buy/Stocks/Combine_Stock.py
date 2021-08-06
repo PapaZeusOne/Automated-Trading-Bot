@@ -21,7 +21,9 @@ def combine_stocks_today(id_list):
     stock.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'stock_id']
 
     # calc indicators for every stock
-    stock = calc_indicators(stock) 
+    stock = calc_indicators(stock)
+    stock['pct_change'] = stock['Adj Close'].pct_change(periods=14, fill_method='ffill')
+ 
 
     # drop unnecessary rows with NaN values
     stock.dropna(inplace=True) 
@@ -47,13 +49,16 @@ def combine_stocks_14d_ago(id_list):
     del data['8. split coefficient']
 
     # Resize df and rename columns appropriately
-    date = date.today()
-    date_15d_ago = date + timedelta(days=-15)
+    date_15d_ago = date.today() + timedelta(days=-15)
     stock = data[start_date:date_15d_ago].copy()
     stock.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'stock_id']
 
     # calc indicators for every stock
     stock = calc_indicators(stock) 
+
+    period = 14
+    stock['pct_change'] = stock['Adj Close'].pct_change(periods=period, fill_method='ffill')
+    #stock = stock.iloc[::period, :]
 
     # drop unnecessary rows with NaN values
     stock.dropna(inplace=True) 
