@@ -8,3 +8,4 @@ from Packages.imports_buy import *
 
 
 # dataframe muss ich shiften um 14 tage, damit die werte auf einem level sind 
+

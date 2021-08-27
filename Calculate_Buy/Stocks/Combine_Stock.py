@@ -1,7 +1,7 @@
 from Packages.imports_buy import *
 from Indicators.Combine_Indicators import *
 
-def combine_stocks_today(id_list):
+def combine_stocks_today(id_list, calc):
 
   ts = TimeSeries(key='AXUYKPP8SFQ1MAB7', output_format='pandas')  
   start_date = '2020-7-28'
@@ -20,9 +20,10 @@ def combine_stocks_today(id_list):
     stock = data[start_date:].copy()
     stock.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'stock_id']
 
-    # calc indicators for every stock
-    stock = calc_indicators(stock)
-    stock['pct_change'] = stock['Adj Close'].pct_change(periods=14, fill_method='ffill')
+    # calc indicators for every stock if parameter is set to true
+    if calc:
+      stock = calc_indicators(stock)
+      stock['pct_change'] = stock['Adj Close'].pct_change(periods=14, fill_method='ffill')
  
 
     # drop unnecessary rows with NaN values
@@ -33,7 +34,7 @@ def combine_stocks_today(id_list):
   
   return df_complete
 
-def combine_stocks_14d_ago(id_list):
+def combine_stocks_Xdays_ago(id_list, period, calc):
 
   ts = TimeSeries(key='AXUYKPP8SFQ1MAB7', output_format='pandas')  
   start_date = '2020-7-28'
@@ -54,11 +55,10 @@ def combine_stocks_14d_ago(id_list):
     stock.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'stock_id']
 
     # calc indicators for every stock
-    stock = calc_indicators(stock) 
-
-    period = 14
-    stock['pct_change'] = stock['Adj Close'].pct_change(periods=period, fill_method='ffill')
-    #stock = stock.iloc[::period, :]
+    if calc:
+      stock = calc_indicators(stock) 
+      stock['pct_change'] = stock['Adj Close'].pct_change(periods=period, fill_method='ffill')
+      #stock = stock.iloc[::period, :]
 
     # drop unnecessary rows with NaN values
     stock.dropna(inplace=True) 
