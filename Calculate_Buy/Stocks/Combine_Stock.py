@@ -1,10 +1,10 @@
 from Packages.imports_buy import *
 from Indicators.Combine_Indicators import *
 
-def combine_stocks_today(id_list, calc):
+def combine_stocks_today(id_list, start, calc):
 
   ts = TimeSeries(key='AXUYKPP8SFQ1MAB7', output_format='pandas')  
-  start_date = '2020-7-28'
+  start_date = start
   df_list = []
 
   for id in id_list:
@@ -32,10 +32,10 @@ def combine_stocks_today(id_list, calc):
   
   return df_complete
 
-def combine_stocks_Xdays_ago(id_list, period, calc):
+def combine_stocks_Xdays_ago(id_list, start, period, calc):
 
   ts = TimeSeries(key='AXUYKPP8SFQ1MAB7', output_format='pandas')  
-  start_date = '2020-7-28'
+  start_date = start
   df_list = []
 
   for id in id_list:
@@ -48,8 +48,8 @@ def combine_stocks_Xdays_ago(id_list, period, calc):
         del data[column]
 
     # Resize df and rename columns appropriately
-    date_15d_ago = date.today() + timedelta(days=-15)
-    stock = data[start_date:date_15d_ago].copy()
+    date_Xdays_ago = date.today() + timedelta(days=-period)
+    stock = data[start_date:date_Xdays_ago].copy()
     stock.columns = ['Open', 'High', 'Low', 'Close', 'Adj Close', 'stock_id']
 
     # calc indicators for every stock
