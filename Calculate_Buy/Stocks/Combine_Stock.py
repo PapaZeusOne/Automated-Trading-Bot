@@ -11,10 +11,10 @@ def combine_stocks_today(id_list, calc):
     data, meta_data = ts.get_daily_adjusted(symbol=id, outputsize='full') # Change outputsize to 'compact' and only receive data from the last 100 days
     data = data.sort_index(ascending=True)
     data['stock_id'] = id
-    
-    del data['6. volume']
-    del data['7. dividend amount']
-    del data['8. split coefficient']
+
+    delete_values = ['6. volume', '7. dividend amount', '8. split coefficient']
+    for column in delete_values:
+        del data[column]
 
     # Resize df and rename columns appropriately
     stock = data[start_date:].copy()
@@ -22,9 +22,7 @@ def combine_stocks_today(id_list, calc):
 
     # calc indicators for every stock if parameter is set to true
     if calc:
-      stock = calc_indicators(stock)
-      stock['pct_change'] = stock['Adj Close'].pct_change(periods=14, fill_method='ffill')
- 
+      stock = calc_indicators(stock) 
 
     # drop unnecessary rows with NaN values
     stock.dropna(inplace=True) 
@@ -45,9 +43,9 @@ def combine_stocks_Xdays_ago(id_list, period, calc):
     data = data.sort_index(ascending=True)
     data['stock_id'] = id
     
-    del data['6. volume']
-    del data['7. dividend amount']
-    del data['8. split coefficient']
+    delete_values = ['6. volume', '7. dividend amount', '8. split coefficient']
+    for column in delete_values:
+        del data[column]
 
     # Resize df and rename columns appropriately
     date_15d_ago = date.today() + timedelta(days=-15)
@@ -57,8 +55,6 @@ def combine_stocks_Xdays_ago(id_list, period, calc):
     # calc indicators for every stock
     if calc:
       stock = calc_indicators(stock) 
-      stock['pct_change'] = stock['Adj Close'].pct_change(periods=period, fill_method='ffill')
-      #stock = stock.iloc[::period, :]
 
     # drop unnecessary rows with NaN values
     stock.dropna(inplace=True) 
